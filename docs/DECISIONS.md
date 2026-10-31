@@ -20,3 +20,29 @@
 
 **Decision:** Automaic security updates setup using the tool unattended-upgrades.  
 **Reason:** unattended-upgrades provide a tool to automatically check and install Debian security upgrades to avoid risk of manual upgrades not being implemented routinely.
+
+# Phase 2 Decisions
+
+**Decision:** Set up the A and CNAME records for the domain in Cloudflare with proxy off (DNS only) for initial deployment.  
+**Reason:** This makes sure Caddy setup has less problems during the initial deployment, simpler debugging, directt certificate issuance. Revisit Cloudflare proxy status later.  
+
+**Decision:** Installed Caddy using the official Debian repo.  
+**Reason:** Did this for reliablity, simplicity sake, and less spreading of trust.  
+
+**Decision:** Sites live in /var/www/<domain>/ owned by the adminuser, group www-data, mode 755/644. This grants the webserver read-only access and the adminuser full permissions, read, write, execute.  
+**Reason:** the directory choice is based on traditional Debian conventions, ownership, user and group permissions are based on securing the website from public access beyond read-only, and allowing the user account to have full perms for routine maintentance and other necessities.  
+
+**Decision:** Deploy using rsync over SSH, build hugo projects locally, copy the public/ directory content over to the domain directory on the VPS. This keeps Hugo off the serverand allows for secure site deployment and updates using rsync and local builds.     
+**Reason:** The decision to use rsync is for the synchronization the utility offers, this allows for simpler and more efficient file transfers and synchronization, since rsync does not have to copy complete files when it only needs to update partials. This allows for more efficient site deployments and updates. rsync is also a secure transfer utility and is open-source, fitting the projects philosophy of simple, secure, and open-source where applicable.  
+
+**Decision:** Setup the simple ssh iono-vps command.  
+**Reason:** Allows for an easier ssh command for server access either through sending commands or full ssh access, also keeps the terminal more sanitized without exposing IP every ssh command.  
+
+**Decision:** During caddy testing, systemd initial config was revealed to not have an automatic restart handling configured. So, I had to create and override.conf with the restart configuration after 5seconds. After configuration, crash and restart tests we successful.   
+**Reason:** This configuration was instituted to prevent crashes of the server or caddy service from not recovering properly and restarting the service.  
+
+
+**Decision:** 
+**Reason:**
+
+
