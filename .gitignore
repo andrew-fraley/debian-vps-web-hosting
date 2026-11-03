@@ -16,3 +16,10 @@ resources/_gen/
 *.swp
 .DS_Store
 
+
+# Data and local-only files
+*.db
+*.sqlite
+backups/
+restore-test.db
+PROJECT-PLAN.md
